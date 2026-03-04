@@ -4,6 +4,11 @@ import { TrustBar } from "@/components/trust-bar"
 import { AboutSection } from "@/components/about-section"
 import { FeaturesSection } from "@/components/features-section"
 import { CoreFeaturesCarousel } from "@/components/core-features-carousel"
+import { RevolutCarousel } from "@/components/revolut-carousel"
+import { PerspectiveCarousel } from "@/components/perspective-carousel"
+import { ParallaxCarousel } from "@/components/parallax-carousel"
+import { CardFanCarousel } from "@/components/card-fan-carousel"
+import { PresenceCarousel } from "@/components/presence-carousel"
 import { TrailerSection } from "@/components/trailer-section"
 import { WhySection } from "@/components/why-section"
 import { RequirementsSection } from "@/components/requirements-section"
@@ -22,6 +27,11 @@ export default function Home() {
       <AboutSection />
       <FeaturesSection />
       <CoreFeaturesCarousel />
+      <RevolutCarousel />
+      <PerspectiveCarousel />
+      <ParallaxCarousel />
+      <CardFanCarousel />
+      <PresenceCarousel />
       <TrailerSection />
       <WhySection />
       <RequirementsSection />
