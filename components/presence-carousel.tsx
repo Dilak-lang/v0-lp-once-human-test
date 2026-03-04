@@ -51,19 +51,22 @@ const slides = [
 
 const slideVariants = {
   enter: (direction: number) => ({
-    x: direction > 0 ? 400 : -400,
+    x: direction > 0 ? 500 : -500,
     opacity: 0,
-    scale: 0.9,
+    scale: 0.85,
+    rotateY: direction > 0 ? -15 : 15,
   }),
   center: {
     x: 0,
     opacity: 1,
     scale: 1,
+    rotateY: 0,
   },
   exit: (direction: number) => ({
-    x: direction > 0 ? -400 : 400,
+    x: direction > 0 ? -500 : 500,
     opacity: 0,
-    scale: 0.85,
+    scale: 0.8,
+    rotateY: direction > 0 ? 15 : -15,
   }),
 }
 
@@ -71,13 +74,28 @@ const childStagger = {
   hidden: { opacity: 0 },
   visible: {
     opacity: 1,
-    transition: { staggerChildren: 0.1, delayChildren: 0.2 },
+    transition: { staggerChildren: 0.12, delayChildren: 0.25 },
   },
 }
 
 const childItem = {
-  hidden: { opacity: 0, y: 15 },
-  visible: { opacity: 1, y: 0, transition: { type: "spring", stiffness: 300, damping: 24 } },
+  hidden: { opacity: 0, y: 20, scale: 0.95 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    scale: 1,
+    transition: { type: "spring", stiffness: 300, damping: 22, mass: 0.7 },
+  },
+}
+
+const tagItem = {
+  hidden: { opacity: 0, scale: 0.7, x: -10 },
+  visible: {
+    opacity: 1,
+    scale: 1,
+    x: 0,
+    transition: { type: "spring", stiffness: 400, damping: 18 },
+  },
 }
 
 export function PresenceCarousel() {
@@ -121,7 +139,7 @@ export function PresenceCarousel() {
   const slide = slides[currentIndex]
 
   return (
-    <section className="relative overflow-hidden py-24">
+    <section className="relative overflow-hidden py-24" style={{ perspective: "1400px" }}>
       <div className="absolute inset-0 bg-gradient-to-b from-background via-[#0e0e18] to-background" />
       <div className="pointer-events-none absolute left-0 top-0 h-px w-full bg-gradient-to-r from-transparent via-neon-cyan/20 to-transparent" />
 
@@ -142,7 +160,10 @@ export function PresenceCarousel() {
         </motion.div>
 
         {/* Main carousel area */}
-        <div className="relative mx-auto h-[480px] overflow-hidden rounded-2xl border border-border/40 bg-card/30 sm:h-[420px]">
+        <div
+          className="relative mx-auto h-[480px] overflow-hidden rounded-2xl border border-border/40 bg-card/30 sm:h-[420px]"
+          style={{ transformStyle: "preserve-3d" }}
+        >
           <AnimatePresence initial={false} custom={direction} mode="wait">
             <motion.div
               key={currentIndex}
@@ -151,8 +172,15 @@ export function PresenceCarousel() {
               initial="enter"
               animate="center"
               exit="exit"
-              transition={{ type: "spring", stiffness: 250, damping: 30, mass: 0.8 }}
+              transition={{
+                type: "spring",
+                stiffness: 150,
+                damping: 22,
+                mass: 0.9,
+                duration: 0.8,
+              }}
               className="absolute inset-0"
+              style={{ transformStyle: "preserve-3d" }}
             >
               {/* Image background */}
               <Image
@@ -172,9 +200,14 @@ export function PresenceCarousel() {
                 className="relative z-10 flex h-full flex-col justify-center p-8 sm:max-w-[55%] sm:p-12"
               >
                 <motion.div variants={childItem} className="mb-3 flex items-center gap-2">
-                  <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-neon-cyan/15">
+                  <motion.div
+                    className="flex h-8 w-8 items-center justify-center rounded-lg bg-neon-cyan/15"
+                    initial={{ rotate: -20, scale: 0 }}
+                    animate={{ rotate: 0, scale: 1 }}
+                    transition={{ type: "spring", stiffness: 500, damping: 15, delay: 0.3 }}
+                  >
                     <slide.icon className="h-4 w-4 text-neon-cyan" />
-                  </div>
+                  </motion.div>
                   <span className="text-xs font-semibold uppercase tracking-wider text-neon-cyan">
                     {slide.subtitle}
                   </span>
@@ -195,13 +228,15 @@ export function PresenceCarousel() {
                 </motion.p>
 
                 <motion.div variants={childItem} className="flex flex-wrap gap-2">
-                  {slide.tags.map((tag) => (
-                    <span
+                  {slide.tags.map((tag, tagIndex) => (
+                    <motion.span
                       key={tag}
+                      variants={tagItem}
+                      custom={tagIndex}
                       className="rounded-full border border-neon-cyan/20 bg-neon-cyan/10 px-3 py-1 text-xs font-semibold text-neon-cyan"
                     >
                       {tag}
-                    </span>
+                    </motion.span>
                   ))}
                 </motion.div>
               </motion.div>

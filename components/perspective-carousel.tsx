@@ -59,6 +59,28 @@ const slides = [
   },
 ]
 
+const badgeBounce = {
+  hidden: { opacity: 0, scale: 0.5, y: -20 },
+  visible: {
+    opacity: 1,
+    scale: 1,
+    y: 0,
+    transition: { type: "spring", stiffness: 600, damping: 12, mass: 0.5 },
+  },
+  exit: { opacity: 0, scale: 0.5, y: -10, transition: { duration: 0.15 } },
+}
+
+const statBadgeBounce = {
+  hidden: { opacity: 0, y: 30, scale: 0.6 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    scale: 1,
+    transition: { type: "spring", stiffness: 400, damping: 14, mass: 0.6, delay: 0.1 },
+  },
+  exit: { opacity: 0, y: 15, scale: 0.8, transition: { duration: 0.2 } },
+}
+
 export function PerspectiveCarousel() {
   const [activeIndex, setActiveIndex] = useState(2)
   const [isHovered, setIsHovered] = useState(false)
@@ -96,7 +118,6 @@ export function PerspectiveCarousel() {
 
   const getCardStyle = (index: number) => {
     let offset = index - activeIndex
-    // Wrap around for infinite loop appearance
     if (offset > 2) offset -= slides.length
     if (offset < -2) offset += slides.length
 
@@ -104,11 +125,11 @@ export function PerspectiveCarousel() {
     const isCenter = offset === 0
 
     return {
-      x: offset * 280,
-      scale: isCenter ? 1 : Math.max(0.7, 1 - absOffset * 0.15),
-      rotateY: offset * -12,
-      z: isCenter ? 100 : -absOffset * 100,
-      opacity: absOffset > 2 ? 0 : Math.max(0.3, 1 - absOffset * 0.3),
+      x: offset * 300,
+      scale: isCenter ? 1.08 : Math.max(0.65, 1 - absOffset * 0.18),
+      rotateY: offset * -15,
+      z: isCenter ? 150 : -absOffset * 120,
+      opacity: absOffset > 2 ? 0 : Math.max(0.25, 1 - absOffset * 0.35),
     }
   }
 
@@ -135,8 +156,8 @@ export function PerspectiveCarousel() {
 
         <div
           ref={containerRef}
-          className="relative mx-auto flex h-[500px] items-center justify-center"
-          style={{ perspective: "1200px" }}
+          className="relative mx-auto flex h-[520px] items-center justify-center"
+          style={{ perspective: "1400px" }}
           onMouseEnter={() => setIsHovered(true)}
           onMouseLeave={() => setIsHovered(false)}
           onMouseDown={handleDragStart}
@@ -154,29 +175,35 @@ export function PerspectiveCarousel() {
                 animate={style}
                 transition={{
                   type: "spring",
-                  stiffness: 200,
-                  damping: 25,
-                  mass: 0.8,
+                  stiffness: 140,
+                  damping: 20,
+                  mass: 1,
                 }}
                 style={{ transformStyle: "preserve-3d" }}
                 onClick={() => setActiveIndex(i)}
               >
-                <div
+                <motion.div
                   className={cn(
-                    "group relative flex h-[420px] w-[300px] flex-col overflow-hidden rounded-2xl border bg-card transition-shadow sm:w-[340px]",
+                    "group relative flex h-[420px] w-[300px] flex-col overflow-hidden rounded-2xl border bg-card sm:w-[340px]",
                     isCenter
-                      ? "border-neon-cyan/40 shadow-[0_0_50px_rgba(6,182,212,0.15)]"
+                      ? "border-neon-cyan/40 shadow-[0_0_60px_rgba(6,182,212,0.2)]"
                       : "border-border/30"
                   )}
+                  whileHover={isCenter ? {
+                    y: -8,
+                    scale: 1.05,
+                    boxShadow: "0 0 50px rgba(6,182,212,0.25), 0 25px 70px rgba(0,0,0,0.5)",
+                    transition: { type: "spring", stiffness: 300, damping: 20 },
+                  } : {}}
                 >
-                  {/* Badge */}
+                  {/* Badge - bounces in */}
                   <AnimatePresence>
                     {isCenter && (
                       <motion.div
-                        initial={{ opacity: 0, scale: 0.8, y: -10 }}
-                        animate={{ opacity: 1, scale: 1, y: 0 }}
-                        exit={{ opacity: 0, scale: 0.8, y: -10 }}
-                        transition={{ type: "spring", stiffness: 400, damping: 20 }}
+                        variants={badgeBounce}
+                        initial="hidden"
+                        animate="visible"
+                        exit="exit"
                         className="absolute right-4 top-4 z-20 rounded-full bg-neon-cyan/20 px-3 py-1 text-xs font-bold text-neon-cyan backdrop-blur-sm"
                       >
                         {slide.badge}
@@ -201,19 +228,19 @@ export function PerspectiveCarousel() {
                       src={slide.image}
                       alt={slide.title}
                       fill
-                      className="object-cover"
+                      className="object-cover transition-transform duration-700 group-hover:scale-110"
                     />
                     <div className="absolute inset-0 bg-gradient-to-b from-card via-card/30 to-transparent" />
                   </div>
 
-                  {/* Floating stat badge */}
+                  {/* Floating stat badge - bounces in */}
                   <AnimatePresence>
                     {isCenter && (
                       <motion.div
-                        initial={{ opacity: 0, y: 20 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        exit={{ opacity: 0, y: 20 }}
-                        transition={{ delay: 0.15, type: "spring", stiffness: 300 }}
+                        variants={statBadgeBounce}
+                        initial="hidden"
+                        animate="visible"
+                        exit="exit"
                         className="absolute inset-x-4 bottom-4 z-10 flex items-center gap-3 rounded-xl border border-neon-cyan/20 bg-card/80 px-4 py-3 backdrop-blur-md"
                       >
                         <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-neon-cyan/15">
@@ -229,7 +256,7 @@ export function PerspectiveCarousel() {
                       </motion.div>
                     )}
                   </AnimatePresence>
-                </div>
+                </motion.div>
               </motion.div>
             )
           })}

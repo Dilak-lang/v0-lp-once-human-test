@@ -55,6 +55,36 @@ const slides = [
   },
 ]
 
+const cardHoverVariants = {
+  idle: {
+    y: 0,
+    scale: 1,
+    boxShadow: "0 0 0px rgba(249,115,22,0)",
+  },
+  hover: {
+    y: -8,
+    scale: 1.05,
+    boxShadow: "0 0 40px rgba(249,115,22,0.2), 0 20px 60px rgba(0,0,0,0.5)",
+    transition: { type: "spring", stiffness: 300, damping: 20 },
+  },
+}
+
+const badgeBounce = {
+  hidden: { opacity: 0, y: 24, scale: 0.7 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    scale: 1,
+    transition: {
+      type: "spring",
+      stiffness: 500,
+      damping: 15,
+      mass: 0.6,
+    },
+  },
+  exit: { opacity: 0, y: 12, scale: 0.85, transition: { duration: 0.2 } },
+}
+
 export function RevolutCarousel() {
   const [emblaRef, emblaApi] = useEmblaCarousel({
     align: "start",
@@ -85,7 +115,7 @@ export function RevolutCarousel() {
   }, [emblaApi, onSelect])
 
   return (
-    <section className="relative overflow-hidden py-24">
+    <section className="relative overflow-hidden py-24" style={{ perspective: "1200px" }}>
       {/* Dark navy gradient background */}
       <div className="absolute inset-0 bg-gradient-to-b from-[#0a0e1a] via-[#0d1225] to-[#0a0e1a]" />
       <div className="pointer-events-none absolute left-0 top-0 h-px w-full bg-gradient-to-r from-transparent via-orange-500/30 to-transparent" />
@@ -115,21 +145,28 @@ export function RevolutCarousel() {
                   key={slide.title}
                   className="min-w-0 shrink-0 grow-0 basis-[85%] sm:basis-[55%] md:basis-[38%] lg:basis-[28%]"
                   animate={{
-                    scale: isActive ? 1.03 : 1,
-                    opacity: isActive ? 1 : 0.7,
+                    scale: isActive ? 1.03 : 0.95,
+                    opacity: isActive ? 1 : 0.6,
+                    rotateY: isActive ? 0 : i < selectedIndex ? 8 : -8,
+                    z: isActive ? 50 : -30,
                   }}
-                  transition={{ type: "spring", stiffness: 300, damping: 30 }}
+                  transition={{
+                    type: "spring",
+                    stiffness: 180,
+                    damping: 22,
+                    mass: 0.8,
+                    duration: 0.7,
+                  }}
+                  style={{ transformStyle: "preserve-3d" }}
                 >
                   <motion.div
                     className="group relative flex h-[440px] cursor-grab flex-col overflow-hidden rounded-2xl border border-border/50 bg-[#141929] active:cursor-grabbing"
-                    whileHover={{
-                      y: -8,
-                      boxShadow: "0 0 40px rgba(249, 115, 22, 0.15), 0 20px 60px rgba(0,0,0,0.4)",
-                    }}
-                    transition={{ type: "spring", stiffness: 400, damping: 25 }}
+                    variants={cardHoverVariants}
+                    initial="idle"
+                    whileHover="hover"
                   >
                     {/* Hover glow border */}
-                    <div className="absolute inset-0 rounded-2xl opacity-0 transition-opacity duration-300 group-hover:opacity-100" style={{ boxShadow: "inset 0 0 0 1px rgba(249,115,22,0.3)" }} />
+                    <div className="absolute inset-0 rounded-2xl opacity-0 transition-opacity duration-300 group-hover:opacity-100" style={{ boxShadow: "inset 0 0 0 1px rgba(249,115,22,0.4)" }} />
 
                     {/* Top content */}
                     <div className="relative z-10 flex flex-col gap-2 p-6 pb-3">
@@ -148,18 +185,25 @@ export function RevolutCarousel() {
                         src={slide.image}
                         alt={slide.title}
                         fill
-                        className="object-cover transition-transform duration-500 group-hover:scale-105"
+                        className="object-cover transition-transform duration-700 group-hover:scale-110"
                       />
                       <div className="absolute inset-0 bg-gradient-to-b from-[#141929] via-[#141929]/40 to-transparent" />
                     </div>
 
-                    {/* Bottom stat bar */}
-                    <AnimatePresence>
+                    {/* Bottom stat bar - bounces in when active */}
+                    <AnimatePresence mode="wait">
                       <motion.div
-                        className="absolute inset-x-4 bottom-4 z-10 flex items-center gap-3 rounded-xl border border-border/30 bg-[#0d1225]/80 px-4 py-3 backdrop-blur-md"
-                        initial={{ opacity: 0, y: 10 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ delay: 0.1 }}
+                        key={isActive ? `active-${i}` : `idle-${i}`}
+                        variants={badgeBounce}
+                        initial="hidden"
+                        animate="visible"
+                        exit="exit"
+                        className={cn(
+                          "absolute inset-x-4 bottom-4 z-10 flex items-center gap-3 rounded-xl border px-4 py-3 backdrop-blur-md",
+                          isActive
+                            ? "border-orange-500/30 bg-[#0d1225]/90"
+                            : "border-border/30 bg-[#0d1225]/80"
+                        )}
                       >
                         <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-orange-500/20">
                           <slide.icon className="h-4 w-4 text-orange-400" />
@@ -169,10 +213,20 @@ export function RevolutCarousel() {
                             {slide.description}
                           </p>
                         </div>
-                        <div className="text-right">
-                          <p className="text-lg font-bold text-orange-400">{slide.stat}</p>
-                          <p className="text-[10px] text-muted-foreground">{slide.statLabel}</p>
-                        </div>
+                        <AnimatePresence>
+                          {isActive && (
+                            <motion.div
+                              initial={{ opacity: 0, scale: 0 }}
+                              animate={{ opacity: 1, scale: 1 }}
+                              exit={{ opacity: 0, scale: 0 }}
+                              transition={{ type: "spring", stiffness: 500, damping: 20, delay: 0.15 }}
+                              className="text-right"
+                            >
+                              <p className="text-lg font-bold text-orange-400">{slide.stat}</p>
+                              <p className="text-[10px] text-muted-foreground">{slide.statLabel}</p>
+                            </motion.div>
+                          )}
+                        </AnimatePresence>
                       </motion.div>
                     </AnimatePresence>
 

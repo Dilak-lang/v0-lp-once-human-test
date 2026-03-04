@@ -95,7 +95,7 @@ export function CardFanCarousel() {
       return {
         x: 0,
         y: 0,
-        scale: 1,
+        scale: 1.08,
         rotateZ: 0,
         rotateY: 0,
         zIndex: 50,
@@ -104,13 +104,13 @@ export function CardFanCarousel() {
     }
 
     return {
-      x: offset * 60,
-      y: absOffset * 15,
-      scale: Math.max(0.75, 1 - absOffset * 0.1),
-      rotateZ: offset * 5,
-      rotateY: offset * -8,
+      x: offset * 70,
+      y: absOffset * 20,
+      scale: Math.max(0.7, 1 - absOffset * 0.12),
+      rotateZ: offset * 6,
+      rotateY: offset * -10,
       zIndex: 40 - absOffset * 10,
-      opacity: absOffset > 2 ? 0 : Math.max(0.3, 1 - absOffset * 0.25),
+      opacity: absOffset > 2 ? 0 : Math.max(0.2, 1 - absOffset * 0.3),
     }
   }
 
@@ -137,7 +137,7 @@ export function CardFanCarousel() {
 
         <div
           className="relative mx-auto flex h-[520px] items-center justify-center"
-          style={{ perspective: "1000px" }}
+          style={{ perspective: "1200px" }}
           onMouseEnter={() => setIsHovered(true)}
           onMouseLeave={() => setIsHovered(false)}
           onMouseDown={handleDragStart}
@@ -164,46 +164,68 @@ export function CardFanCarousel() {
                 }}
                 transition={{
                   type: "spring",
-                  stiffness: 250,
-                  damping: 25,
+                  stiffness: 160,
+                  damping: 20,
+                  mass: 0.9,
                 }}
                 style={{ transformStyle: "preserve-3d" }}
                 onClick={() => setActiveIndex(i)}
               >
-                <div
+                <motion.div
                   className={cn(
                     "group relative flex h-[400px] w-[280px] flex-col overflow-hidden rounded-2xl border sm:w-[340px]",
                     isActive
-                      ? "border-orange-500/40 shadow-[0_0_50px_rgba(249,115,22,0.15)]"
+                      ? "border-orange-500/40 shadow-[0_0_60px_rgba(249,115,22,0.2)]"
                       : "border-border/20 bg-card"
                   )}
+                  whileHover={isActive ? {
+                    y: -8,
+                    scale: 1.05,
+                    boxShadow: "0 0 60px rgba(249,115,22,0.25), 0 25px 70px rgba(0,0,0,0.5)",
+                    transition: { type: "spring", stiffness: 300, damping: 20 },
+                  } : {}}
                 >
                   {/* Full background image */}
                   <Image
                     src={slide.image}
                     alt={slide.title}
                     fill
-                    className="object-cover"
+                    className="object-cover transition-transform duration-700 group-hover:scale-110"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-[#0c0c14] via-[#0c0c14]/50 to-transparent" />
 
-                  {/* Shine/reflection on active */}
+                  {/* Shine/reflection sweep on active */}
                   <AnimatePresence>
                     {isActive && (
                       <motion.div
-                        initial={{ x: "-100%", opacity: 0 }}
-                        animate={{ x: "200%", opacity: 0.15 }}
+                        key={`shine-${activeIndex}`}
+                        initial={{ x: "-120%", opacity: 0 }}
+                        animate={{ x: "250%", opacity: [0, 0.2, 0.2, 0] }}
                         exit={{ opacity: 0 }}
-                        transition={{ duration: 1.2, ease: "easeInOut" }}
-                        className="absolute inset-0 z-10 w-1/3 skew-x-[-20deg] bg-gradient-to-r from-transparent via-foreground to-transparent"
+                        transition={{ duration: 1.5, ease: "easeInOut" }}
+                        className="absolute inset-0 z-10 w-1/4 skew-x-[-20deg] bg-gradient-to-r from-transparent via-foreground to-transparent"
                       />
                     )}
                   </AnimatePresence>
 
-                  {/* Stat badge top-right */}
-                  <div className="absolute right-4 top-4 z-10 rounded-full bg-orange-500/20 px-3 py-1 text-xs font-bold text-orange-400 backdrop-blur-sm">
-                    {slide.stat}
-                  </div>
+                  {/* Stat badge top-right bounces in */}
+                  <AnimatePresence>
+                    {isActive && (
+                      <motion.div
+                        initial={{ opacity: 0, scale: 0.4, y: -15 }}
+                        animate={{
+                          opacity: 1,
+                          scale: 1,
+                          y: 0,
+                          transition: { type: "spring", stiffness: 500, damping: 14 },
+                        }}
+                        exit={{ opacity: 0, scale: 0.5, transition: { duration: 0.15 } }}
+                        className="absolute right-4 top-4 z-20 rounded-full bg-orange-500/20 px-3 py-1 text-xs font-bold text-orange-400 backdrop-blur-sm"
+                      >
+                        {slide.stat}
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
 
                   {/* Bottom content */}
                   <div className="relative z-10 mt-auto p-6">
@@ -218,7 +240,7 @@ export function CardFanCarousel() {
                       {slide.description}
                     </p>
                   </div>
-                </div>
+                </motion.div>
               </motion.div>
             )
           })}

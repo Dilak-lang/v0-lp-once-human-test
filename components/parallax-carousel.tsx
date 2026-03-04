@@ -1,7 +1,7 @@
 "use client"
 
 import { useState, useCallback, useEffect, useRef } from "react"
-import { motion, useMotionValue, useTransform } from "framer-motion"
+import { motion, useMotionValue, useTransform, AnimatePresence } from "framer-motion"
 import Image from "next/image"
 import { Brain, Swords, EyeOff, Paintbrush, CloudLightning } from "lucide-react"
 import useEmblaCarousel from "embla-carousel-react"
@@ -12,6 +12,8 @@ const slides = [
     icon: Brain,
     title: "Skill Progression",
     subtitle: "RPG Systems",
+    stat: "100+",
+    statLabel: "Abilities",
     image: "/images/s4-skill.jpg",
     description: "Unlock powerful abilities across multiple skill trees and create your ultimate survivor build.",
   },
@@ -19,6 +21,8 @@ const slides = [
     icon: Swords,
     title: "Epic Boss Battles",
     subtitle: "PvE Encounters",
+    stat: "25+",
+    statLabel: "Raid Bosses",
     image: "/images/s4-boss.jpg",
     description: "Coordinate with your squad to take down massive Stardust-corrupted bosses in cinematic encounters.",
   },
@@ -26,6 +30,8 @@ const slides = [
     icon: EyeOff,
     title: "Stealth & Tactics",
     subtitle: "Playstyles",
+    stat: "6",
+    statLabel: "Play Styles",
     image: "/images/s4-stealth.jpg",
     description: "Approach every situation your way: go in guns blazing or use stealth and cunning to survive.",
   },
@@ -33,6 +39,8 @@ const slides = [
     icon: Paintbrush,
     title: "Full Customization",
     subtitle: "Character & Gear",
+    stat: "500+",
+    statLabel: "Cosmetics",
     image: "/images/s4-customize.jpg",
     description: "Personalize everything from your appearance to weapon skins and base decorations.",
   },
@@ -40,10 +48,26 @@ const slides = [
     icon: CloudLightning,
     title: "Dynamic Weather",
     subtitle: "Living World",
+    stat: "8",
+    statLabel: "Weather Types",
     image: "/images/s4-weather.jpg",
     description: "Navigate acid rain storms, toxic fog, and other dynamic weather that changes gameplay.",
   },
 ]
+
+const hoverVariants = {
+  idle: {
+    y: 0,
+    scale: 1,
+    boxShadow: "0 0 0 rgba(220,38,38,0)",
+  },
+  hover: {
+    y: -8,
+    scale: 1.05,
+    boxShadow: "0 0 50px rgba(220,38,38,0.2), 0 25px 70px rgba(0,0,0,0.5)",
+    transition: { type: "spring", stiffness: 300, damping: 20 },
+  },
+}
 
 export function ParallaxCarousel() {
   const [emblaRef, emblaApi] = useEmblaCarousel({
@@ -58,10 +82,12 @@ export function ParallaxCarousel() {
   const sectionRef = useRef<HTMLElement>(null)
 
   // Parallax mouse tracking
-  const bgX = useTransform(mouseX, [-500, 500], [15, -15])
-  const bgY = useTransform(mouseY, [-300, 300], [10, -10])
-  const fgX = useTransform(mouseX, [-500, 500], [-20, 20])
-  const fgY = useTransform(mouseY, [-300, 300], [-15, 15])
+  const bgX = useTransform(mouseX, [-500, 500], [20, -20])
+  const bgY = useTransform(mouseY, [-300, 300], [15, -15])
+  const fgX = useTransform(mouseX, [-500, 500], [-25, 25])
+  const fgY = useTransform(mouseY, [-300, 300], [-20, 20])
+  const midX = useTransform(mouseX, [-500, 500], [10, -10])
+  const midY = useTransform(mouseY, [-300, 300], [8, -8])
 
   const handleMouseMove = useCallback(
     (e: React.MouseEvent) => {
@@ -100,17 +126,22 @@ export function ParallaxCarousel() {
       ref={sectionRef}
       className="relative overflow-hidden py-24"
       onMouseMove={handleMouseMove}
+      style={{ perspective: "1200px" }}
     >
       {/* Background with parallax layers */}
       <div className="absolute inset-0 bg-gradient-to-b from-background via-[#0a0f18] to-background" />
 
-      {/* Parallax glow orbs */}
+      {/* Parallax glow orbs - 3 layers at different speeds */}
       <motion.div
-        className="pointer-events-none absolute left-1/4 top-1/3 h-64 w-64 rounded-full bg-neon-red/5 blur-3xl"
+        className="pointer-events-none absolute left-1/4 top-1/4 h-72 w-72 rounded-full bg-neon-red/6 blur-3xl"
         style={{ x: bgX, y: bgY }}
       />
       <motion.div
-        className="pointer-events-none absolute right-1/4 bottom-1/3 h-48 w-48 rounded-full bg-neon-cyan/5 blur-3xl"
+        className="pointer-events-none absolute right-1/3 top-1/2 h-56 w-56 rounded-full bg-neon-cyan/5 blur-3xl"
+        style={{ x: midX, y: midY }}
+      />
+      <motion.div
+        className="pointer-events-none absolute right-1/4 bottom-1/3 h-64 w-64 rounded-full bg-neon-red/4 blur-3xl"
         style={{ x: fgX, y: fgY }}
       />
 
@@ -143,27 +174,39 @@ export function ParallaxCarousel() {
                 >
                   <motion.div
                     animate={{
-                      scale: isActive ? 1.05 : 0.92,
-                      opacity: isActive ? 1 : 0.5,
-                      filter: isActive ? "blur(0px)" : "blur(2px)",
+                      scale: isActive ? 1.06 : 0.88,
+                      opacity: isActive ? 1 : 0.4,
+                      filter: isActive ? "blur(0px)" : "blur(3px)",
+                      rotateY: isActive ? 0 : i < selectedIndex ? 10 : -10,
+                      z: isActive ? 80 : -40,
                     }}
-                    transition={{ type: "spring", stiffness: 300, damping: 30 }}
+                    transition={{
+                      type: "spring",
+                      stiffness: 160,
+                      damping: 22,
+                      mass: 0.9,
+                      duration: 0.8,
+                    }}
+                    style={{ transformStyle: "preserve-3d" }}
                     className="group relative"
                   >
-                    <div
+                    <motion.div
                       className={cn(
-                        "relative flex h-[440px] flex-col overflow-hidden rounded-2xl border transition-shadow",
+                        "relative flex h-[440px] flex-col overflow-hidden rounded-2xl border",
                         isActive
-                          ? "border-neon-red/30 shadow-[0_0_50px_rgba(220,38,38,0.12)]"
+                          ? "border-neon-red/30 shadow-[0_0_60px_rgba(220,38,38,0.15)]"
                           : "border-border/20"
                       )}
+                      variants={hoverVariants}
+                      initial="idle"
+                      whileHover={isActive ? "hover" : "idle"}
                     >
                       {/* Full image background */}
                       <Image
                         src={slide.image}
                         alt={slide.title}
                         fill
-                        className="object-cover"
+                        className="object-cover transition-transform duration-700 group-hover:scale-110"
                       />
 
                       {/* Gradient overlay */}
@@ -171,7 +214,7 @@ export function ParallaxCarousel() {
 
                       {/* Hover glow particles */}
                       <div className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-500 group-hover:opacity-100">
-                        <div className="absolute left-1/2 top-1/2 h-32 w-32 -translate-x-1/2 -translate-y-1/2 rounded-full bg-neon-red/10 blur-2xl" />
+                        <div className="absolute left-1/2 top-1/2 h-40 w-40 -translate-x-1/2 -translate-y-1/2 rounded-full bg-neon-red/10 blur-2xl" />
                       </div>
 
                       {/* Bottom content */}
@@ -186,8 +229,28 @@ export function ParallaxCarousel() {
                         <p className="text-sm leading-relaxed text-muted-foreground line-clamp-2">
                           {slide.description}
                         </p>
+
+                        {/* Animated stat badge */}
+                        <AnimatePresence>
+                          {isActive && (
+                            <motion.div
+                              initial={{ opacity: 0, y: 16, scale: 0.8 }}
+                              animate={{
+                                opacity: 1,
+                                y: 0,
+                                scale: 1,
+                                transition: { type: "spring", stiffness: 400, damping: 15, delay: 0.15 },
+                              }}
+                              exit={{ opacity: 0, y: 8, scale: 0.9, transition: { duration: 0.2 } }}
+                              className="mt-4 inline-flex items-center gap-3 rounded-xl border border-neon-red/20 bg-card/70 px-4 py-2 backdrop-blur-md"
+                            >
+                              <span className="text-xl font-bold text-neon-red">{slide.stat}</span>
+                              <span className="text-xs text-muted-foreground">{slide.statLabel}</span>
+                            </motion.div>
+                          )}
+                        </AnimatePresence>
                       </div>
-                    </div>
+                    </motion.div>
                   </motion.div>
                 </div>
               )
