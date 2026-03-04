@@ -4,7 +4,7 @@ import { useState, useEffect } from "react"
 import { motion, AnimatePresence } from "framer-motion"
 import { Menu, X } from "lucide-react"
 
-const AFFILIATE_LINK = "#steam-affiliate-link"
+const AFFILIATE_LINK = "https://to.wendiro.com/u?k=24c3cf9a5dde4dd896352d1314e9aacd&via=26561"
 
 export function Navbar() {
   const [scrolled, setScrolled] = useState(false)
@@ -28,11 +28,10 @@ export function Navbar() {
       initial={{ y: -100 }}
       animate={{ y: 0 }}
       transition={{ duration: 0.6, ease: "easeOut" }}
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        scrolled
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${scrolled
           ? "bg-background/95 backdrop-blur-md border-b border-border shadow-[0_4px_30px_rgba(220,38,38,0.1)]"
           : "bg-transparent"
-      }`}
+        }`}
     >
       <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-3 lg:px-8">
         {/* Logo */}
