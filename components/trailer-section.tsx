@@ -34,7 +34,7 @@ export function TrailerSection() {
           <div className="relative overflow-hidden rounded-lg border border-border bg-card">
             <div className="aspect-video">
               <iframe
-                src="https://www.youtube.com/watch?v=XTwOAAGhLCk"
+                src="https://www.youtube.com/embed/XTwOAAGhLCk?autoplay=1&mute=1&rel=0&modestbranding=1"
                 title="Once Human Official Trailer"
                 className="h-full w-full"
                 loading="lazy"

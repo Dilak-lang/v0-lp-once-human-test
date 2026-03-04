@@ -2,7 +2,7 @@
 
 import { motion } from "framer-motion"
 
-const AFFILIATE_LINK = "#steam-affiliate-link"
+const AFFILIATE_LINK = "https://to.wendiro.com/u?k=24c3cf9a5dde4dd896352d1314e9aacd&via=26561"
 
 export function FinalCtaSection() {
   return (

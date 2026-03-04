@@ -4,7 +4,7 @@ import { motion } from "framer-motion"
 import { ChevronDown } from "lucide-react"
 import { ParticleField } from "./particle-field"
 
-const AFFILIATE_LINK = "#steam-affiliate-link"
+const AFFILIATE_LINK = "https://to.wendiro.com/u?k=24c3cf9a5dde4dd896352d1314e9aacd&via=26561"
 
 function GlitchText({ children, className }: { children: string; className?: string }) {
   return (
