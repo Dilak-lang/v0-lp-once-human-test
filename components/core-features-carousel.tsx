@@ -16,7 +16,7 @@ const coreFeatures = [
     statLabel: "Map Size",
     description:
       "Traverse massive contaminated landscapes filled with abandoned cities, eerie forests, and hidden underground facilities teeming with loot.",
-    image: "/images/carousel-explore.jpg",
+    image: "/images/gallery-titans.jpg",
   },
   {
     icon: Crosshair,
@@ -26,7 +26,7 @@ const coreFeatures = [
     statLabel: "Weapon Types",
     description:
       "Battle terrifying Stardust-corrupted creatures and supernatural bosses with an arsenal of devastating weapons.",
-    image: "/images/carousel-combat.jpg",
+    image: "/images/gallery-spider-boss.jpg",
   },
   {
     icon: Home,
@@ -46,7 +46,7 @@ const coreFeatures = [
     statLabel: "Co-op Squads",
     description:
       "Join forces with friends in seamless co-op or brave the contaminated world alone. Your survival, your rules.",
-    image: "/images/carousel-coop.jpg",
+    image: "/images/gallery-red-creature.jpg",
   },
   {
     icon: Wrench,

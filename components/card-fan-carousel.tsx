@@ -12,7 +12,7 @@ const slides = [
     title: "Raid Fortresses",
     subtitle: "End-Game Content",
     stat: "Legendary",
-    image: "/images/s5-raid.jpg",
+    image: "/images/gallery-hazmat.jpg",
     description: "Storm massive end-game fortresses with your squad for the rarest loot in the game.",
   },
   {
@@ -28,7 +28,7 @@ const slides = [
     title: "Anomaly Rifts",
     subtitle: "Supernatural Events",
     stat: "Mythic",
-    image: "/images/s5-anomaly.jpg",
+    image: "/images/gallery-red-petals.png",
     description: "Enter unstable anomaly rifts for high-risk, high-reward encounters with warped reality.",
   },
   {
@@ -44,7 +44,7 @@ const slides = [
     title: "Night Terrors",
     subtitle: "Horror Elements",
     stat: "Extreme",
-    image: "/images/s5-night.jpg",
+    image: "/images/gallery-titans.jpg",
     description: "Survive the horrifying night cycle when the most dangerous creatures emerge from the dark.",
   },
 ]

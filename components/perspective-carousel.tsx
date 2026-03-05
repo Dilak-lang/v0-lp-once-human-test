@@ -14,7 +14,7 @@ const slides = [
     stat: "40+",
     statLabel: "Unique Deviants",
     badge: "Collectible",
-    image: "/images/s3-deviant.jpg",
+    image: "/images/gallery-mutant-plant.jpg",
     description: "Discover and tame supernatural Deviant creatures to aid you in combat and exploration.",
   },
   {
@@ -34,7 +34,7 @@ const slides = [
     stat: "20+",
     statLabel: "Dungeon Types",
     badge: "Challenge",
-    image: "/images/s3-scenario.jpg",
+    image: "/images/gallery-spider-boss.jpg",
     description: "Raid handcrafted scenario dungeons with your squad for rare loot and epic boss fights.",
   },
   {
@@ -54,7 +54,7 @@ const slides = [
     stat: "1000+",
     statLabel: "Tradeable Items",
     badge: "Marketplace",
-    image: "/images/s3-trade.jpg",
+    image: "/images/gallery-motorcycle.jpg",
     description: "Trade resources, gear, and rare items with other players in a thriving in-game economy.",
   },
 ]

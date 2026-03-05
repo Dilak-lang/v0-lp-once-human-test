@@ -12,7 +12,7 @@ const slides = [
     title: "Devastating Weapon Arsenal",
     subtitle: "Weapons",
     tags: ["50+ Weapons", "Unique Mods", "Legendary Tier"],
-    image: "/images/s2-weapons.jpg",
+    image: "/images/gallery-bus-monster.jpg",
     description: "Collect and master an arsenal of unique weapons from plasma rifles to melee devastators. Upgrade, modify, and unleash devastating combinations.",
   },
   {
@@ -20,7 +20,7 @@ const slides = [
     title: "Traverse the Wasteland",
     subtitle: "Vehicles",
     tags: ["12 Types", "Customizable", "Off-Road"],
-    image: "/images/s2-vehicles.jpg",
+    image: "/images/gallery-cyberbike.jpg",
     description: "Build and customize rugged vehicles to explore the vast contaminated terrain at speed. Outfit them with weapons and armor.",
   },
   {
@@ -28,7 +28,7 @@ const slides = [
     title: "Face Terrifying Bosses",
     subtitle: "Boss Fights",
     tags: ["30+ Bosses", "Raid Mechanics", "Epic Loot"],
-    image: "/images/s2-creatures.jpg",
+    image: "/images/gallery-spider-boss.jpg",
     description: "Fight mutated monstrosities with devastating attack patterns. Coordinate squad tactics to bring down world bosses.",
   },
   {
@@ -36,7 +36,7 @@ const slides = [
     title: "Claim Your Territory",
     subtitle: "Territories",
     tags: ["8 Regions", "Resource Wars", "Alliances"],
-    image: "/images/s2-territory.jpg",
+    image: "/images/gallery-mutants-swamp.jpg",
     description: "Establish outposts, claim strategic locations, and form alliances to control valuable resources across the map.",
   },
   {
@@ -44,7 +44,7 @@ const slides = [
     title: "Dynamic World Events",
     subtitle: "Live Events",
     tags: ["24/7 Active", "Rewards", "Limited Time"],
-    image: "/images/s2-events.jpg",
+    image: "/images/gallery-red-creature.jpg",
     description: "Participate in massive world events including anomaly storms, invasions, and rare supply drops with exclusive rewards.",
   },
 ]

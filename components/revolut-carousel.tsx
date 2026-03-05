@@ -14,7 +14,7 @@ const slides = [
     subtitle: "Weapons >",
     stat: "50+",
     statLabel: "Unique Weapons",
-    image: "/images/s2-weapons.jpg",
+    image: "/images/gallery-hazmat.jpg",
     description: "Collect and master an arsenal of over 50 unique weapons, from plasma rifles to melee devastators.",
   },
   {
@@ -23,7 +23,7 @@ const slides = [
     subtitle: "Vehicles >",
     stat: "12",
     statLabel: "Vehicle Types",
-    image: "/images/s2-vehicles.jpg",
+    image: "/images/gallery-cyberbike.jpg",
     description: "Build and customize rugged vehicles to explore the vast contaminated terrain at high speed.",
   },
   {
@@ -32,7 +32,7 @@ const slides = [
     subtitle: "Creatures >",
     stat: "30+",
     statLabel: "Boss Encounters",
-    image: "/images/s2-creatures.jpg",
+    image: "/images/gallery-bus-monster.jpg",
     description: "Fight mutated monstrosities and Stardust-corrupted bosses with devastating attack patterns.",
   },
   {
@@ -41,7 +41,7 @@ const slides = [
     subtitle: "Territory >",
     stat: "8",
     statLabel: "Regions to Control",
-    image: "/images/s2-territory.jpg",
+    image: "/images/gallery-mutants-swamp.jpg",
     description: "Establish outposts, claim strategic locations, and expand your influence across the map.",
   },
   {
@@ -50,7 +50,7 @@ const slides = [
     subtitle: "Events >",
     stat: "24/7",
     statLabel: "Live Events",
-    image: "/images/s2-events.jpg",
+    image: "/images/gallery-green-hand.png",
     description: "Participate in massive world events — anomaly storms, invasions, and supply drops.",
   },
 ]

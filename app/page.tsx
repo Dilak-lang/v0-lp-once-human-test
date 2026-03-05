@@ -9,6 +9,7 @@ import { PerspectiveCarousel } from "@/components/perspective-carousel"
 import { ParallaxCarousel } from "@/components/parallax-carousel"
 import { CardFanCarousel } from "@/components/card-fan-carousel"
 import { PresenceCarousel } from "@/components/presence-carousel"
+import { GalleryCarousel } from "@/components/gallery-carousel"
 import { TrailerSection } from "@/components/trailer-section"
 import { WhySection } from "@/components/why-section"
 import { RequirementsSection } from "@/components/requirements-section"
@@ -32,6 +33,7 @@ export default function Home() {
       <ParallaxCarousel />
       <CardFanCarousel />
       <PresenceCarousel />
+      <GalleryCarousel />
       <TrailerSection />
       <WhySection />
       <RequirementsSection />

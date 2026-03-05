@@ -37,7 +37,7 @@ export function HeroSection() {
       {/* Background image - darker */}
       <div
         className="absolute inset-0 bg-cover bg-center bg-no-repeat scale-105"
-        style={{ backgroundImage: "url('/images/hero-bg-new.png')" }}
+        style={{ backgroundImage: "url('/images/hero-bg-scene.webp')" }}
       />
 
       {/* Heavy dark overlays for maximum darkness */}
