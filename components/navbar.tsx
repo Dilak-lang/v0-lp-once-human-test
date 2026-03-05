@@ -35,18 +35,12 @@ export function Navbar() {
     >
       <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-3 lg:px-8">
         {/* Logo */}
-        <a href="#" className="flex items-center gap-3">
-          <div className="flex items-center gap-2">
-            <div className="relative">
-              <div className="h-8 w-8 rounded bg-neon-red flex items-center justify-center">
-                <span className="text-primary-foreground font-bold text-sm font-sans">OH</span>
-              </div>
-              <div className="absolute inset-0 rounded bg-neon-red/30 blur-md" />
-            </div>
-            <span className="text-lg font-bold tracking-wider uppercase text-foreground">
-              Once Human
-            </span>
-          </div>
+        <a href="#" className="flex items-center">
+          <img
+            src="/images/once-human-logo.png"
+            alt="Once Human logo"
+            className="h-10 w-auto object-contain"
+          />
         </a>
 
         {/* Desktop nav */}

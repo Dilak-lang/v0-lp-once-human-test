@@ -10,42 +10,42 @@ const features = [
     title: "Explore the Map",
     description:
       "Traverse a vast contaminated open world filled with abandoned cities, eerie forests, and hidden underground facilities.",
-    image: "/images/feature-explore.jpg",
+    image: "/images/gallery-titans.jpg",
   },
   {
     icon: Crosshair,
     title: "Loot & Craft",
     description:
       "Scavenge resources, find rare blueprints, and craft powerful weapons and gear to dominate the wasteland.",
-    image: "/images/feature-loot.jpg",
+    image: "/images/gallery-cyberbike.jpg",
   },
   {
     icon: Home,
     title: "Build Your Base",
     description:
       "Construct and fortify your shelter. Design elaborate defenses to protect your resources from threats.",
-    image: "/images/feature-base.jpg",
+    image: "/images/gallery-motorcycle.jpg",
   },
   {
     icon: Skull,
     title: "Fight Mutated Horrors",
     description:
       "Battle terrifying Stardust-corrupted creatures and supernatural bosses that lurk in the darkness.",
-    image: "/images/feature-fight.jpg",
+    image: "/images/gallery-bus-monster.jpg",
   },
   {
     icon: Users,
     title: "Play Solo or Squad",
     description:
       "Team up with friends in co-op or brave the contaminated world alone. Your survival, your rules.",
-    image: "/images/feature-squad.jpg",
+    image: "/images/gallery-red-creature.jpg",
   },
   {
     icon: Swords,
     title: "PvE + Optional PvP",
     description:
       "Enjoy rich PvE content or opt into intense PvP combat against other survivors for ultimate stakes.",
-    image: "/images/feature-pvp.jpg",
+    image: "/images/gallery-spider-boss.jpg",
   },
 ]
 

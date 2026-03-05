@@ -23,7 +23,7 @@ const slides = [
     subtitle: "PvE Encounters",
     stat: "25+",
     statLabel: "Raid Bosses",
-    image: "/images/s4-boss.jpg",
+    image: "/images/gallery-bus-monster.jpg",
     description: "Coordinate with your squad to take down massive Stardust-corrupted bosses in cinematic encounters.",
   },
   {
@@ -32,7 +32,7 @@ const slides = [
     subtitle: "Playstyles",
     stat: "6",
     statLabel: "Play Styles",
-    image: "/images/s4-stealth.jpg",
+    image: "/images/gallery-red-creature.jpg",
     description: "Approach every situation your way: go in guns blazing or use stealth and cunning to survive.",
   },
   {
@@ -41,7 +41,7 @@ const slides = [
     subtitle: "Character & Gear",
     stat: "500+",
     statLabel: "Cosmetics",
-    image: "/images/s4-customize.jpg",
+    image: "/images/gallery-pink-warrior.jpg",
     description: "Personalize everything from your appearance to weapon skins and base decorations.",
   },
   {
